@@ -37,6 +37,7 @@ class practical.mocha.ClientServerReporter
           mochaClientRunner.any (event, eventArgs)->
             args = eventArgs.slice()
             args.unshift(event)
+            console.log.apply(console,args)
             clientRunner.emit.apply(clientRunner, args)
 
       @serverRunnerProxy.on "end", =>

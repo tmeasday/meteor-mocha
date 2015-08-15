@@ -48,27 +48,34 @@ describe '5 - All sync test suite', ->
   it 'throwing', ->
     expect(false).to.be.true
 
-describe '6 - All async test suite', ->
-  before (done)->
-    log.debug 'before'
-    Meteor.defer -> done()
-  after (done)->
-    log.debug 'after'
-    Meteor.setTimeout( (-> done()), 1000)
+describe.only '6 - All async test suite', ->
+#  before (done)->
+#    log.debug 'before'
+#    Meteor.defer -> done()
+#  after (done)->
+#    log.debug 'after'
+#    Meteor.setTimeout( (-> done()), 1000)
   beforeEach (done)->
     log.debug 'beforeEach'
     Meteor.setTimeout( (-> done()), 1000)
+
   afterEach (done)->
+    @timeout(500)
     log.debug 'afterEach'
     Meteor.setTimeout( (-> done()), 1000)
 
-  @timeout(5000)
   it 'passing', (done)->
-
+    @timeout(6000)
+#    console.log("test.timeout", @timeout)
+#    console.log("test._id", @runnable()._id)
     expect(true).to.be.true
-    Meteor.setTimeout( (-> done()), 3000)
-  it 'throwing', (done)->
-    Meteor.defer -> done(new Error('failing'))
+    Meteor.setTimeout ->
+      console.log("---------------yes it was called", done);
+      done()
+    ,5000
+
+#  it 'throwing', (done)->
+#    Meteor.defer -> done(new Error('failing'))
 
 describe '7 - implicit wait', ->
   it 'during findOne', ->

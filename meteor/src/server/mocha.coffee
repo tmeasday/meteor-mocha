@@ -1,4 +1,4 @@
-Mocha = Npm.require('mocha')
+#@Mocha = Npm.require('mocha')
 Future = Npm.require('fibers/future')
 options =
   ui: 'bdd'

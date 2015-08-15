@@ -7,9 +7,9 @@ Package.describe({
 });
 
 
-Npm.depends({
-  mocha: "2.1.0"
-});
+//Npm.depends({
+//  mocha: "2.1.0"
+//});
 
 
 Package.onUse(function (api) {
@@ -48,6 +48,8 @@ Package.onUse(function (api) {
   // Uncomment once we upgrade to loglevel v2
   //api.addFiles('src/lib/log.js');
 
+
+  api.addFiles([ 'mocha-server.js']);
   api.addFiles(['meteor/src/lib/namespaces.coffee']);
 
   api.addFiles([

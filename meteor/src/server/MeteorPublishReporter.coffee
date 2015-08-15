@@ -1,4 +1,16 @@
 log = new ObjectLogger('MeteorPublishReporter', 'info')
+EventEmitter = Npm.require("events").EventEmitter
+
+EventEmitter.prototype.any = (fn)->
+  @on("any event", fn)
+#  console.log("called :)")
+
+EventEmitter.prototype.__emit = EventEmitter.prototype.emit
+EventEmitter.prototype.emit = (name)->
+  if name != 'any event'
+    args = [].slice.call(arguments, 1);
+    @__emit('any event', name, args)
+  @__emit.apply(@, arguments)
 
 class practical.mocha.MeteorPublishReporter extends practical.mocha.BaseReporter
 
@@ -28,10 +40,17 @@ class practical.mocha.MeteorPublishReporter extends practical.mocha.BaseReporter
       @stopped = false
       @sequence = 0
 
+      runner._id = Random.id()
+      log.info "umm yah?", runner._id
       # Specify how to run tests 'serial' or 'parallel'
       # Running in 'serial' will start server tests first and then client tests
       @added 'run order', process.env.MOCHA_RUN_ORDER || 'parallel'
 
+
+      runner.any (eventName, args)->
+        obj = args[0];
+#        console.log("obj", obj instanceof Mocha.Suite)
+#        console.log("eventName", eventName)
 
       @runner.on 'start', =>
         try
@@ -39,6 +58,8 @@ class practical.mocha.MeteorPublishReporter extends practical.mocha.BaseReporter
 #          @added 'start', {total: @stats.total}
           @added 'start', @stats
           @publisher.ready()
+        catch ex
+          log.error(ex.stack or ex.message)
         finally
           log.return()
 
@@ -48,6 +69,8 @@ class practical.mocha.MeteorPublishReporter extends practical.mocha.BaseReporter
 #          log.info "suite:", suite.title
 #          @added 'suite', {title: suite.title, _fullTitle: suite.fullTitle(), root: suite.root}
           @added 'suite', @cleanSuite(suite)
+        catch ex
+          log.error(ex.stack or ex.message)
         finally
           log.return()
 
@@ -55,13 +78,18 @@ class practical.mocha.MeteorPublishReporter extends practical.mocha.BaseReporter
         try
           log.enter 'onSuiteEnd', arguments
           @added 'suite end', @cleanSuite(suite)
+        catch ex
+          log.error(ex.stack or ex.message)
         finally
           log.return()
 
       @runner.on 'test end', (test)=>
         try
           log.enter 'onTestEnd', arguments
+          console.log("***************************")
           @added 'test end', @cleanTest(test)
+        catch ex
+          log.error(ex.stack or ex.message)
         finally
           log.return()
 
@@ -69,6 +97,8 @@ class practical.mocha.MeteorPublishReporter extends practical.mocha.BaseReporter
         try
           log.enter 'onPass', arguments
           @added 'pass', @cleanTest(test)
+        catch ex
+          log.error(ex.stack or ex.message)
         finally
           log.return()
 
@@ -76,6 +106,8 @@ class practical.mocha.MeteorPublishReporter extends practical.mocha.BaseReporter
         try
           log.enter 'onFail', arguments
           @added 'fail', @cleanTest(test)
+        catch ex
+          log.error(ex.stack or ex.message)
         finally
           log.return()
 
@@ -83,6 +115,8 @@ class practical.mocha.MeteorPublishReporter extends practical.mocha.BaseReporter
         try
           log.enter 'onEnd', arguments
           @added 'end', @stats
+        catch ex
+          log.error(ex.stack or ex.message)
         finally
           log.return()
 
@@ -91,8 +125,12 @@ class practical.mocha.MeteorPublishReporter extends practical.mocha.BaseReporter
           log.enter 'onPending', arguments
           log.debug "test", test
           @added 'pending', @cleanTest(test)
+        catch ex
+          log.error(ex.stack or ex.message)
         finally
           log.return()
+    catch ex
+      log.error(ex.stack or ex.message)
     finally
       log.return()
 
@@ -108,6 +146,8 @@ class practical.mocha.MeteorPublishReporter extends practical.mocha.BaseReporter
         event: event
         data: data
       @publisher.added('mochaServerRunEvents', doc._id, doc)
+    catch ex
+      log.error(ex.stack or ex.message)
     finally
       log.return()
 
@@ -145,6 +185,8 @@ class practical.mocha.MeteorPublishReporter extends practical.mocha.BaseReporter
         err: @errorJSON(test.err or {})
       }
       return cleanTest
+    catch ex
+      log.error(ex.stack or ex.message)
     finally
       log.return()
 
@@ -161,6 +203,8 @@ class practical.mocha.MeteorPublishReporter extends practical.mocha.BaseReporter
       root: suite.root
       pending: suite.pending
       }
+    catch ex
+      log.error(ex.stack or ex.message)
     finally
       log.return()
 
