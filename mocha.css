@@ -1,3 +1,5 @@
+.xxxReporterCss { color: white; }
+
 @charset "utf-8";
 
 body {
@@ -280,3 +282,5 @@ body {
   margin-left: 50px;
   margin-bottom: -25px;
 }
+
+.xxxReporterCss { color: white; }
