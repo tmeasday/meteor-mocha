@@ -142,6 +142,12 @@ test-reporters:
 		--reporter $(REPORTER) \
 		test/reporters/*.js
 
+test-delay:
+	@./bin/mocha \
+		--reporter $(REPORTER) \
+		--delay \
+		test/delay/*.js
+
 test-only:
 	@./bin/mocha \
 		--reporter $(REPORTER) \
@@ -163,6 +169,11 @@ test-sort:
 		--reporter $(REPORTER) \
 		--sort \
 		test/acceptance/sort
+
+test-mocha:
+	@./bin/mocha \
+		--reporter $(REPORTER) \
+		test/mocha
 
 non-tty:
 	@./bin/mocha \

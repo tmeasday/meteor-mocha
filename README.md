@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/practicalmeteor/meteor-mocha.svg?branch=meteor)](https://travis-ci.org/practicalmeteor/meteor-mocha)
+[![Build Status](https://api.travis-ci.org/mochajs/mocha.svg?branch=master)](http://travis-ci.org/mochajs/mocha) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mochajs/mocha?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## practicalmeteor:mocha
 
@@ -60,6 +60,6 @@ If someone would like to get this going, we'll be happy to provide how-to instru
 
 [mocha](https://github.com/mochajs/mocha) - [MIT](https://github.com/mochajs/mocha/blob/master/LICENSE)
 
-[mike:mocha](https://atmospherejs.com/mike/mocha) - [MIT](https://github.com/mad-eye/meteor-mocha-web/blob/master/LICENSE)
-
-[practicalmeteor:mocha](https://atmospherejs.com/practicalmeteor/mocha) - [MIT](https://github.com/practicalmeteor/meteor-mocha/blob/meteor/meteor/LICENSE.md)
+  - [Google Group](http://groups.google.com/group/mochajs)
+  - [Wiki](https://github.com/mochajs/mocha/wiki)
+  - Mocha [Extensions and reporters](https://github.com/mochajs/mocha/wiki)
